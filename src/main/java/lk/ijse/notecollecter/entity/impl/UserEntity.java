@@ -1,2 +1,29 @@
-package lk.ijse.notecollecter.entity;public class UserEntity {
+package lk.ijse.notecollecter.entity.impl;
+
+import jakarta.persistence.*;
+import lk.ijse.notecollecter.dto.impl.NoteDTO;
+import lk.ijse.notecollecter.entity.SuperEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+@Table(name = "user")
+public class UserEntity implements SuperEntity {
+    @Id
+    private String userId;
+    private String firstName;
+    private String lastName;
+    @Column(unique = true)
+    private String email;
+    private String password;
+    private String profilePic;
+
+    @OneToMany(mappedBy = "userEntity")
+    private List<NoteEntity> notes;
 }

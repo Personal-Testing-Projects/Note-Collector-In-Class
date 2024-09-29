@@ -11,13 +11,6 @@ import java.util.List;
 
 @Service
 public class NoteServiceImpl implements NoteService{
-    private static List<NoteDTO> noteDTOList = new ArrayList<>();
-
-    public NoteServiceImpl() {
-        noteDTOList.add(new NoteDTO("n0001","Java","LearnJava","2024-9-14","1","u0001"));
-        noteDTOList.add(new NoteDTO("n0002","Python","LearnPython","2024-9-14","2","u0002"));
-        noteDTOList.add(new NoteDTO("n0003","JS","LearnJS","2024-9-14","3","u0003"));
-    }
 
     @Override
     public NoteDTO saveNote(NoteDTO noteDTO) {
@@ -27,7 +20,7 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     public List<NoteDTO> getAllNotes() {
-        return noteDTOList;
+        return null;
     }
 
     @Override

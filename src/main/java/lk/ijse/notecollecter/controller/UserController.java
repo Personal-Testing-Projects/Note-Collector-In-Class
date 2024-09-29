@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -66,6 +67,11 @@ public class UserController {
     @DeleteMapping(value = "/{userId}")
     public void deleteUser(@PathVariable("userId") String userId){
         userService.deleteUser(userId);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDTO> getAllUsers(){
+        return userService.getAllUsers();
     }
 
 

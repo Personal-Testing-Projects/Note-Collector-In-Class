@@ -27,7 +27,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return List.of();
+        List<UserEntity> allUsers = userDAO.findAll();
+        return mapping.asUserDTOList(allUsers);
     }
 
     @Override

@@ -1,14 +1,18 @@
 package lk.ijse.notecollecter.service;
 
+import jakarta.transaction.Transactional;
 import lk.ijse.notecollecter.dao.UserDAO;
 import lk.ijse.notecollecter.dto.impl.UserDTO;
+import lk.ijse.notecollecter.entity.impl.UserEntity;
 import lk.ijse.notecollecter.util.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
+@Transactional
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserDAO userDAO;
@@ -28,7 +32,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDTO getUser(String userId) {
-        return null;
+        UserEntity selectedUser = userDAO.getReferenceById(userId);
+        System.out.println(selectedUser);
+        return mapping.toUserDTO(selectedUser);
     }
 
     @Override

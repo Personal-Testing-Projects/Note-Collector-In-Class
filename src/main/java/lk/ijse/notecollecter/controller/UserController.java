@@ -2,6 +2,7 @@ package lk.ijse.notecollecter.controller;
 
 import lk.ijse.notecollecter.dto.impl.UserDTO;
 import lk.ijse.notecollecter.util.AppUtil;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -13,7 +14,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @PostMapping(consumes = "multipart/form-data",produces = "application/json")
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,produces = "application/json")
     public UserDTO saveUser(
             @RequestPart("firstName") String firstName,
             @RequestPart ("lastName") String lastName,
@@ -38,8 +39,8 @@ public class UserController {
         //UserId generate
         String userId = AppUtil.generateUserId();
 
-
-        //Todo: Build the object
+/*
+        //Todo: Build the object*/
         var buildUserDTO = new UserDTO();
         buildUserDTO.setUserId(userId);
         buildUserDTO.setFirstName(firstName);

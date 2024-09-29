@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-@EnableJpaRepositories(basePackages = "lk.ijse.notecollecter")
+@EnableJpaRepositories(basePackages = "lk.ijse.notecollecter.dao")
 @EnableTransactionManagement
 @Configuration
 @ComponentScan(basePackages = "lk.ijse.notecollecter")

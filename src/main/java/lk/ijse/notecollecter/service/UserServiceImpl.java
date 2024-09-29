@@ -9,7 +9,7 @@ public class UserServiceImpl implements  UserService{
     private UserDAO userDAO;
     @Override
     public UserDTO saveUser(UserDTO userDTO) {
-        userDAO.save();
+        userDAO.save(userDTO);
     }
 
     @Override

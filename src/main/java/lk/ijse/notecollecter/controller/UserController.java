@@ -41,7 +41,7 @@ public class UserController {
 
 /*
         //Todo: Build the object*/
-        var buildUserDTO = new UserDTO();
+        UserDTO buildUserDTO = new UserDTO();
         buildUserDTO.setUserId(userId);
         buildUserDTO.setFirstName(firstName);
         buildUserDTO.setLastName(lastName);

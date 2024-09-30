@@ -1,6 +1,8 @@
 package lk.ijse.notecollecter.service;
 
 import jakarta.transaction.Transactional;
+import lk.ijse.notecollecter.Exception.DataPersistException;
+import lk.ijse.notecollecter.Exception.UserNotFoundException;
 import lk.ijse.notecollecter.dao.UserDAO;
 import lk.ijse.notecollecter.dto.impl.UserDTO;
 import lk.ijse.notecollecter.entity.impl.UserEntity;
@@ -22,8 +24,11 @@ public class UserServiceImpl implements UserService{
     private Mapping mapping;
 
     @Override
-    public UserDTO saveUser(UserDTO userDTO) {
-        return mapping.toUserDTO(userDAO.save(mapping.toUserEntity(userDTO)));
+    public void saveUser(UserDTO userDTO) {
+        UserEntity saveUser = userDAO.save(mapping.toUserEntity(userDTO));
+        if(saveUser == null) {
+            throw new DataPersistException("User Not Saved");
+        }
     }
 
     @Override

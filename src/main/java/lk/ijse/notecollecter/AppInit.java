@@ -24,6 +24,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
 
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(new MultipartConfigElement("C:/Users/La Hiru/Desktop/New folder"));
+        String tempDir = System.getProperty("java.io.tmpdir");
+        registration.setMultipartConfig(new MultipartConfigElement(tempDir));
     }
 }

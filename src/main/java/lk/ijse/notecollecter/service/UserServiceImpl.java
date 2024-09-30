@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -45,5 +46,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(String userId, UserDTO userDTO) {
+        Optional <UserEntity> tempUser = userDAO.findById(userId);
+        if(tempUser.isPresent()) {
+            tempUser.get().setFirstName(userDTO.getFirstName());
+            tempUser.get().setLastName(userDTO.getLastName());
+            tempUser.get().setEmail(userDTO.getEmail());
+            tempUser.get().setPassword(userDTO.getPassword());
+            tempUser.get().setProfilePic(userDTO.getProfilePic());
+        }
     }
 }

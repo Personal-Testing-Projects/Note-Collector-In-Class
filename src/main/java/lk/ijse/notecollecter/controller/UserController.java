@@ -74,5 +74,35 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @PutMapping(value = "/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateUser(@RequestPart("firstName") String firstName,
+                           @RequestPart ("lastName") String lastName,
+                           @RequestPart ("email") String email,
+                           @RequestPart ("password") String password,
+                           @RequestPart ("profilePic") MultipartFile profilePic,
+                           @PathVariable("userId") String userId) {
 
+        System.out.println("Raw pro pic" + profilePic);
+
+        //profilepic -> Base64
+        //String base64ProPic = AppUtil.profilrPicToBase64(profilePic);
+        String base64ProPic = "";
+        try {
+            byte [] bytesProPic = profilePic.getBytes();
+            base64ProPic = AppUtil.profilrPicToBase64(bytesProPic);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Build the project
+        UserDTO buildUserDTO = new UserDTO();
+        buildUserDTO.setUserId(userId);
+        buildUserDTO.setFirstName(firstName);
+        buildUserDTO.setLastName(lastName);
+        buildUserDTO.setEmail(email);
+        buildUserDTO.setPassword(password);
+        buildUserDTO.setProfilePic(base64ProPic);
+
+        userService.updateUser(userId, buildUserDTO);
+    }
 }

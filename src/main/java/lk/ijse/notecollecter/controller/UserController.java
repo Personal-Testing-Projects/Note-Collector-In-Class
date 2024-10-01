@@ -7,6 +7,7 @@ import lk.ijse.notecollecter.dto.UserStatus;
 import lk.ijse.notecollecter.dto.impl.UserDTO;
 import lk.ijse.notecollecter.service.UserService;
 import lk.ijse.notecollecter.util.AppUtil;
+import lk.ijse.notecollecter.util.RegexProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -68,10 +69,7 @@ public class UserController {
 
     @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public UserStatus getSelectedUser(@PathVariable("userId") String userId) {
-        String regexForUserID = "^UID[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForUserID);
-        var regexMatcher = regexPattern.matcher(userId);
-        if(!regexMatcher.matches()){
+        if(!RegexProcess.userIdMatcher(userId)){
             return new SelectedUserAndNoteErrorStatus(1,"User ID is not valid");
         }
         return userService.getUser(userId);
@@ -79,11 +77,8 @@ public class UserController {
 
     @DeleteMapping(value = "/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("userId") String userId){
-        String regexForUserID = "^UID[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForUserID);
-        var regexMatcher = regexPattern.matcher(userId);
         try {
-            if(!regexMatcher.matches()){
+            if(!RegexProcess.userIdMatcher(userId)){
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             userService.deleteUser(userId);

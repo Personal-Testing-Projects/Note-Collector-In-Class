@@ -2,6 +2,7 @@ package lk.ijse.notecollecter.service;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.notecollecter.Exception.DataPersistException;
+import lk.ijse.notecollecter.customStatusCodes.SelectedUserAndNoteErrorStatus;
 import lk.ijse.notecollecter.dao.NoteDAO;
 import lk.ijse.notecollecter.dto.NoteStatus;
 import lk.ijse.notecollecter.dto.impl.NoteDTO;
@@ -41,7 +42,7 @@ public class NoteServiceImpl implements NoteService{
 
     @Override
     public List<NoteDTO> getAllNotes() {
-        return null;
+        return noteMapping.asNoteDTOList();
     }
 
     @Override
@@ -50,7 +51,7 @@ public class NoteServiceImpl implements NoteService{
             var selectedUser = noteDAO.getReferenceById(noteId);
             return noteMapping.toNoteDTO(selectedUser);
         }else {
-            return new 
+            return new SelectedUserAndNoteErrorStatus(1,"Selected note not found");
         }
     }
 

@@ -2,6 +2,7 @@ package lk.ijse.notecollecter.service;
 
 import jakarta.transaction.Transactional;
 import lk.ijse.notecollecter.Exception.DataPersistException;
+import lk.ijse.notecollecter.Exception.NoteNotFoundException;
 import lk.ijse.notecollecter.customStatusCodes.SelectedUserAndNoteErrorStatus;
 import lk.ijse.notecollecter.dao.NoteDAO;
 import lk.ijse.notecollecter.dto.NoteStatus;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -56,8 +58,13 @@ public class NoteServiceImpl implements NoteService{
     }
 
     @Override
-    public Boolean deleteNote(String id) {
-        return null;
+    public void deleteNote(String noteId) {
+        Optional<NoteEntity> foundNote = noteDAO.findById(noteId);
+        if(!foundNote.isPresent()){
+            throw new NoteNotFoundException("Note with id " + noteId + " not found");
+        }else {
+            noteDAO.deleteById(noteId);
+        }
     }
 
     @Override

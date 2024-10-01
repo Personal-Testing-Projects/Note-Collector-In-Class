@@ -9,6 +9,6 @@ public interface NoteService {
     void saveNote(NoteDTO noteDTO);
     List<NoteDTO> getAllNotes();
     NoteStatus getSelectedNote(String id);
-    Boolean deleteNote(String id);
+    void deleteNote(String id);
     Boolean updateNote(String id);
 }

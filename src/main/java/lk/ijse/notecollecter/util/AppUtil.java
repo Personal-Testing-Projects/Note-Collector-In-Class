@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class AppUtil {
     public static String generateID() {
-        return "ID " + UUID.randomUUID();
+        return "NID" + UUID.randomUUID();
     }
 
     public static String profilrPicToBase64(byte[] pofilePic) {

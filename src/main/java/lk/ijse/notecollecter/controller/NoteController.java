@@ -1,6 +1,8 @@
 package lk.ijse.notecollecter.controller;
 
 import lk.ijse.notecollecter.Exception.DataPersistException;
+import lk.ijse.notecollecter.customStatusCodes.SelectedUserAndNoteErrorStatus;
+import lk.ijse.notecollecter.dto.NoteStatus;
 import lk.ijse.notecollecter.dto.impl.NoteDTO;
 import lk.ijse.notecollecter.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/note")
@@ -17,8 +20,15 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    public NoteDTO getSelectedNotes() {
-        return null;
+    @GetMapping(value = "/{noteId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public NoteStatus getSelectedNotes(@PathVariable ("noteId") String noteId) {
+        String regexForUserID = "^NID[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserID);
+        var regexMatcher = regexPattern.matcher(noteId);
+        if(!regexMatcher.matches()){
+            return new SelectedUserAndNoteErrorStatus(1,"Note ID is not valid");
+        }
+        return noteService.getSelectedNote(noteId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

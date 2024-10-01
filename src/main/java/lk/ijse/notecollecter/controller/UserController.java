@@ -2,13 +2,12 @@ package lk.ijse.notecollecter.controller;
 
 import lk.ijse.notecollecter.Exception.DataPersistException;
 import lk.ijse.notecollecter.Exception.UserNotFoundException;
-import lk.ijse.notecollecter.customStatusCodes.SelectedUserErrorStatus;
+import lk.ijse.notecollecter.customStatusCodes.SelectedUserAndNoteErrorStatus;
 import lk.ijse.notecollecter.dto.UserStatus;
 import lk.ijse.notecollecter.dto.impl.UserDTO;
 import lk.ijse.notecollecter.service.UserService;
 import lk.ijse.notecollecter.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -73,7 +72,7 @@ public class UserController {
         Pattern regexPattern = Pattern.compile(regexForUserID);
         var regexMatcher = regexPattern.matcher(userId);
         if(!regexMatcher.matches()){
-            return new SelectedUserErrorStatus(1,"User ID is not valid");
+            return new SelectedUserAndNoteErrorStatus(1,"User ID is not valid");
         }
         return userService.getUser(userId);
     }

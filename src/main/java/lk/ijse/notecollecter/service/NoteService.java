@@ -10,5 +10,5 @@ public interface NoteService {
     List<NoteDTO> getAllNotes();
     NoteStatus getSelectedNote(String id);
     void deleteNote(String id);
-    Boolean updateNote(String id);
+    void updateNote(String noteId, NoteDTO noteDTO);
 }
